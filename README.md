@@ -1,18 +1,45 @@
-1. Título e DescriçãoMonitor de Risco de Crédito — Pipeline End-to-End & Modelo PreditivoPipeline automatizado para monitorar e prever a inadimplência no sistema financeiro nacional. Consome dados do Banco Central (SCR.data) e indicadores macroeconômicos (API SGS), organiza em camadas Medallion (Bronze/Silver/Gold) e alimenta um modelo preditivo com dashboard Real vs. Previsto.
+# Monitor de Risco de Crédito
 
-2. Arquitetura (Rascunho)Plaintext[ BCB: SCR.data + API SGS ] ──► [ Bronze (Raw) ] ──► [ Silver (Clean & Dimensional) ] ──► [ Gold (Datamarts & Features) ] ──► [ MLflow / LightGBM ] ──► [ Dashboard AI/BI ]
+Pipeline de dados ponta a ponta que monitora e prevê a inadimplência do crédito no Brasil a partir de dados públicos do Banco Central. Coleta o SCR.data e as séries macroeconômicas da API SGS, organiza tudo em camadas Medallion (bronze, silver e gold), treina um modelo de previsão e mostra real vs. previsto em um dashboard.
 
-3. StackPlataforma: Databricks Free Edition.Processamento: PySpark + Delta Lake.Transformação e Modelagem: dbt (dbt-databricks).Orquestração: Databricks Workflows (Airflow como extra).Machine Learning & Tracking: LightGBM + MLflow.Visualização: Databricks AI/BI (ou Power BI).Qualidade e Testes: dbt tests + pytest.Engenharia de Software: Git/GitHub, Docker, GitHub Actions.
+## Arquitetura (rascunho)
 
-4. Status
-   Semana 1: Ingestão e Camada Bronze[ ] Ingerir SCR.data e API SGS via PySpark e salvar no Delta Lake.
-   Semana 2: Camada Silver e Modelagem Dimensional[ ] Tratar tipos e construir modelagem dimensional (Star Schema).
-   Semana 3: Camada Gold, dbt e Engenharia de Features[ ] Criar datamarts e Feature Store com dbt e testes de schema.
-   Semana 4: Carga Incremental[ ] Ajustar pipeline para carga mensal incremental com defasagem de 30 dias.
-   Semana 5: Treinamento, MLflow e Servimento[ ] Treinar LightGBM, registrar no MLflow e gerar previsões de inadimplência.
-   Semana 6: Visualização[ ] Construir dashboard Real vs. Previsto no Databricks AI/BI.
-   Semana 7: Orquestração e CI/CD[ ] Encadear pipeline no Databricks Workflows e configurar GitHub Actions.
-   Semana 8: Polimento e Portfólio[ ] Documentar README e estruturar storytelling para entrevistas.5.
+```mermaid
+flowchart LR
+    A["SCR.data"] --> C["Bronze (raw)"]
+    B["API SGS"] --> C
+    C --> D["Silver (limpo e padronizado)"]
+    D --> E["Gold (modelo estrela, dbt)"]
+    E --> F["LightGBM + MLflow"]
+    F --> G["Dashboard real vs. previsto"]
+```
 
+## Stack
 
-   Diário de BordoSemanaO que fizO que aprendiO que travouSemana 1Semana 2Semana 3Semana 4Semana 5Semana 6Semana 7Semana 8
+| Camada | Ferramenta |
+|---|---|
+| Plataforma | Databricks Free Edition |
+| Processamento | PySpark + Delta Lake |
+| Transformação e modelagem | dbt (dbt-databricks) |
+| Orquestração | Databricks Workflows |
+| ML e tracking | LightGBM + MLflow |
+| Dashboard | Databricks AI/BI |
+| Qualidade e testes | dbt tests + pytest |
+| Engenharia de software | Git/GitHub, Docker, GitHub Actions |
+
+## Status
+
+- [x] Semana 0: ambiente e repositório
+- [ ] Semana 1: ingestão (bronze)
+- [ ] Semana 2: silver com PySpark e Delta Lake
+- [ ] Semana 3: gold, modelo estrela com dbt
+- [ ] Semana 4: orquestração e carga incremental
+- [ ] Semana 5: modelo de previsão com MLflow
+- [ ] Semana 6: previsões em produção e dashboard
+- [ ] Semanas 7–8: CI/CD, testes, README final e certificação
+
+## Diário de bordo
+
+| Semana | O que fiz | O que aprendi | O que travou |
+|---|---|---|---|
+| 0 | | | |
